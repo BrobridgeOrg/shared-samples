@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: app-6379
+spec:
+  podSelector:
+    matchLabels:
+      app: app
+      tier: backend
+  ingress:
+  - ports:
+    - port: 6379
+    from:
+    - podSelector:
+        matchLabels:
+          app: app
+          tier: frontend
