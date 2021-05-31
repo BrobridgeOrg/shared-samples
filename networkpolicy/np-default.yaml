@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: default-deny # except DNS
+  name: default-deny
 spec:
   podSelector: {}
   policyTypes:
@@ -11,5 +11,3 @@ spec:
   - ports:
     - protocol: UDP
       port: 53
-    - protocol: TCP
-      port: 80
