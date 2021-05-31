@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sp-role
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-admin: "true"
+    rbac.authorization.k8s.io/aggregate-to-edit: "true"
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "deployments", "daemonsets", "statefulsets", "jobs", "nodes", "persistentvolumes", "persistentvolumeclaims", "namespaces"]
+  verbs: ["get", "list"]

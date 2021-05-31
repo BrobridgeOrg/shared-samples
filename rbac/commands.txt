@@ -1,0 +1,22 @@
+## openssl (root)
+openssl genrsa -out kenny.pem 2048
+openssl req -new -key kenny.pem -out kenny-csr.pem -subj "/CN=kenny/O=it"
+openssl x509 -req -in kenny-csr.pem -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out kenny.crt -days 999
+
+
+## copy config (root)
+cat ~/.kube/config | sed '/^users:/,$d' > ~kenny/kenny_config
+cp kenny.crt  kenny-csr.pem  kenny.pem ~kenny/
+
+## config (kenny)
+mkdir ~/.kube
+cp kenny.crt ~/.kube/
+cp kenny.pem ~/.kube/kenny.key
+cp kenny_config ~/.kube/config
+kubectl config view
+kubectl config delete-context kubernetes-admin@kubernetes
+kubectl config set-credentials kenny --client-certificate ~/.kube/kenny.crt --client-key ~/.kube/kenny.key
+kubectl config set-context kenny@example.com --cluster=kubernetes --user=kenny
+kubectl config use-context kenny@example.com
+kubectl config view
+

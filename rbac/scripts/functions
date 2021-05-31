@@ -1,0 +1,55 @@
+# version 1.0.1
+
+tmp_dir="tmp_files"
+yaml_dir="yaml_files"
+user_dir="user_files"
+old_dir="old_files"
+tmplt_dir="templates"
+time_stamp=$(date +'%Y%m%d-%H%M%S')
+
+create_dir() {
+	for d in "$@"; do
+		[ -d "$d" ] && continue 
+		[ -e "$d" ] &&  rm "$d"
+		mkdir -p "$d"
+	done
+}
+create_dir "$tmp_dir" "$yaml_dir" "$old_dir"
+
+get_clusterrole() {
+	kubectl get clusterrole | tail -n +2 | awk '{print $1}'
+}
+
+get_role() {
+	kubectl -n ${ns}  get role | tail -n +2 | awk '{print $1}'
+}
+
+get_clusterrolebinding() {
+	kubectl get clusterrolebinding | tail -n +2 | awk '{print $1}'
+}
+
+get_rolebinding() {
+	kubectl get rolebinding | tail -n +2 | awk '{print $1}'
+}
+
+Yesno() {
+	echo "$@"
+	echo -n "(Y)es/(N)o (Default: Y): "
+	read ans
+	[ "$ans" ] || ans=y
+	case "$ans" in
+		[Yy][Ee][Ss]|[Yy]) return 0 ;;
+		[Nn][Oo]|[Nn]) return 1 ;;
+	esac
+}
+
+yesNo() {
+	echo "$@"
+	echo -n "(Y)es/(N)o (Default: N): "
+	read ans
+	[ "$ans" ] || ans=n
+	case "$ans" in
+		[Yy][Ee][Ss]|[Yy]) return 0 ;;
+		[Nn][Oo]|[Nn]) return 1 ;;
+	esac
+}
