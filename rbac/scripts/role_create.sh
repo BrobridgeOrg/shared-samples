@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# Version: 1.0.2
+# Version: 1.0.3
 # Copyright: Brobridge Co. Ltd.
 # Author: kenny@brobridge.com
 
@@ -117,7 +117,12 @@ get_template_name() {
 if [ -n "$tmplt_name" ]; then
 	all_tmplt=$(get_template_name)
 	tmplt_file=$(echo "$all_tmplt" | grep ":${tmplt_name}$" | cut -d: -f1)
-	file_num=$(echo "$mplt_file" | wc -l)
+	
+	if [ -n "$tmplt_file" ]; then
+		file_num=$(echo "$mplt_file" | wc -l)
+	else
+		file_num=0
+	fi
 
 	# abort if more than one tmplate files found
 	if [ "$file_num" -eq 0 ]; then

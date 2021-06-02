@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# Version: 1.0.1
+# Version: 1.0.2
 # Copyright: Brobridge Co. Ltd.
 # Author: kenny@brobridge.com
 
@@ -44,6 +44,7 @@ done
 }
 
 [ "$kind" = ClusterRole ] || {
+	kind=Role
 	[ "$ns" ] || ns=default
 }
 
