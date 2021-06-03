@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# Version: 1.0.2
+# Version: 1.0.3
 # Copyright: Brobridge Co. Ltd.
 # Author: kenny@brobridge.com
 
@@ -102,6 +102,7 @@ fi
 }
 
 yaml_file="$tmp_dir"/${kind,,}_${role_name}_${user_kind,,}:${user_name}.yaml
+[ "$ns" ] && yaml_file="$tmp_dir"/${kind,,}_${role_name}_ns:${ns}_${user_kind,,}:${user_name}.yaml
 
 cat > $yaml_file << END
 kind: $kind

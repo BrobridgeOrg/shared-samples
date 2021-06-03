@@ -17,19 +17,19 @@ create_dir() {
 create_dir "$tmp_dir" "$yaml_dir" "$old_dir"
 
 get_clusterrole() {
-	kubectl get clusterrole | tail -n +2 | awk '{print $1}'
+	kubectl get clusterrole 2>/dev/null| tail -n +2 | awk '{print $1}'
 }
 
 get_role() {
-	kubectl -n ${ns}  get role | tail -n +2 | awk '{print $1}'
+	kubectl -n ${ns}  get role 2>/dev/null | tail -n +2 | awk '{print $1}'
 }
 
 get_clusterrolebinding() {
-	kubectl get clusterrolebinding | tail -n +2 | awk '{print $1}'
+	kubectl get clusterrolebinding 2>/dev/null| tail -n +2 | awk '{print $1}'
 }
 
 get_rolebinding() {
-	kubectl get rolebinding | tail -n +2 | awk '{print $1}'
+	kubectl get rolebinding 2>/dev/null | tail -n +2 | awk '{print $1}'
 }
 
 Yesno() {
